@@ -1,4 +1,5 @@
 HELP.md
+memory:myDb?cache=shared
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar

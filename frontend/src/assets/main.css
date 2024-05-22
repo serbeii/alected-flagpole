@@ -28,7 +28,7 @@ a,
   }
 
   #app {
-    display: block;
+    display: grid;
     padding: 0 2rem;
   }
 }

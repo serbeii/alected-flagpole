@@ -33,7 +33,7 @@ public class LapData {
     public LapData(String name, long time, String gender, int age, boolean completed) {
         this.name = name;
         this.timeInMs = time;
-        this.gender = Gender.valueOf(gender);
+        this.gender = Gender.valueOf(gender.toUpperCase());
         this.age = age;
         this.completed = completed;
     }

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
+import AdminView from '@/views/AdminView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,8 +11,9 @@ const router = createRouter({
       component: MainView
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/admin',
+      name: 'admin',
+      component: AdminView
     }
   ]
 })

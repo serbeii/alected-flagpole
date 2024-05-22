@@ -1,21 +1,16 @@
 <template>
+    <h1>Rankings:</h1>
     <el-row class="receipts">
-        <el-col :span="24">
+        <el-col :span="48">
             <div class="list-container">
                 <div v-for="(value, index) in messages" :key="index">
                     <p>
-                        <strong>{{ index }}</strong>
-                    </p>
-                    <p>
-                        <strong>Name:</strong>
+                        <strong>{{ index + 1 }}.</strong>
+                        <strong> Name: </strong>
                         {{ value.name }}
-                    </p>
-                    <p>
                         <strong>Time Taken:</strong>
                         {{ value.timeInMs }}
-                    </p>
-                    <p v-if="value.completed == false">
-                        <strong>Disqualified</strong>
+                        <strong v-if="value.completed == false">Disqualified</strong>
                     </p>
                 </div>
             </div>
@@ -32,12 +27,18 @@ const messages = ref([] as LapData[])
 
 const fetchMessages = async () => {
     try {
-        const response = await axios.get(
-            `http://localhost:8080/main`
-        )
+        const response = await axios.get(`http://localhost:8080/main/results`)
         const value = response.data as LapData[]
-        value.sort((a, b) => a.timeInMs - b.timeInMs)
-        messages.value = value;
+        value.sort((a, b) => {
+            if (!a.completed && b.completed) {
+                return 1 // Move a to the bottom
+            } else if (a.completed && !b.completed) {
+                return -1 // Move b to the bottom
+            } else {
+                return a.timeInMs - b.timeInMs
+            }
+        })
+        messages.value = value
         console.log(messages.value)
     } catch (e: any) {
         console.log(e)
@@ -60,7 +61,6 @@ interface LapData {
 }
 
 .receipts {
-    padding-left: calc(var(--section-gap) / 4);
     max-height: 500px;
     overflow: auto;
 }
